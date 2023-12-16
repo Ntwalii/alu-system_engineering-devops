@@ -1,4 +1,13 @@
 #!/usr/bin/env bash
 # write a Bash script that accepts one argument
 # the script should run the whoami command under the user passed as an argument
-sudo -u "$1" whoami
+#Stop Nginx if it's already running
+sudo service nginx stop
+
+#Update the Nginx configuration file
+sudo sed -i 's/user .*/user nginx;/g' /etc/nginx/nginx.conf
+sudo sed -i 's/listen .*/listen 8080;/g' /etc/nginx/nginx.conf
+
+#Start Nginx with the updated configuration
+sudo service nginx start
+
