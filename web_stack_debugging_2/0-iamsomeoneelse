@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 # write a Bash script that accepts one argument
 # the script should run the whoami command under the user passed as an argument
-#Stop Nginx if it's already running
-sudo service nginx stop
+# Check if an argument is provided
+if [ -z "$1" ]; then
+  echo "Please provide a user as an argument."
+  exit 1
+fi
 
-#Update the Nginx configuration file
-sudo sed -i 's/user .*/user nginx;/g' /etc/nginx/nginx.conf
-sudo sed -i 's/listen .*/listen 8080;/g' /etc/nginx/nginx.conf
-
-#Start Nginx with the updated configuration
-sudo service nginx start
-
+# Run the 'whoami' command under the specified user
+sudo -u "$1" whoami
